@@ -99,10 +99,13 @@ namespace DOOM.Game
         private void HandleTouch()
         {
 #if UNITY_EDITOR
-            // Прямое следование за мышью без lerp
-            float t = Mathf.Clamp01(Input.mousePosition.x / Screen.width);
-            float x = Mathf.Lerp(leftBound, rightBound, t);
-            transform.position = new Vector3(x, transform.position.y, transform.position.z);
+            // Зажми левую кнопку мыши и тяни влево/вправо
+            if (Input.GetMouseButton(0))
+            {
+                float t = Mathf.Clamp01(Input.mousePosition.x / Screen.width);
+                float x = Mathf.Lerp(leftBound, rightBound, t);
+                transform.position = new Vector3(x, transform.position.y, transform.position.z);
+            }
 #else
             if (Input.touchCount > 0)
             {
