@@ -59,8 +59,8 @@ namespace DOOM.Game
 
             for (_currentWaveIndex = 0; _currentWaveIndex < waveConfigs.Count; _currentWaveIndex++)
             {
-                if (!GameStateManager.Instance.IsPlaying)
-                    yield return new WaitUntil(() => GameStateManager.Instance.IsPlaying);
+                if (GameStateManager.Instance != null && !GameStateManager.Instance.IsPlaying)
+                    yield return new WaitUntil(() => GameStateManager.Instance == null || GameStateManager.Instance.IsPlaying);
 
                 Core.GameManager.Instance.CurrentSession.currentWave = _currentWaveIndex + 1;
                 var config = waveConfigs[_currentWaveIndex];
@@ -75,12 +75,12 @@ namespace DOOM.Game
 
                 yield return new WaitUntil(() => !_bossPhase);
 
-                GameStateManager.Instance.SetState(GameState.WaveComplete);
+                GameStateManager.Instance?.SetState(GameState.WaveComplete);
                 yield return new WaitForSeconds(timeBetweenWaves);
-                GameStateManager.Instance.SetState(GameState.Playing);
+                GameStateManager.Instance?.SetState(GameState.Playing);
             }
 
-            GameStateManager.Instance.SetState(GameState.Victory);
+            GameStateManager.Instance?.SetState(GameState.Victory);
         }
 
         private IEnumerator SpawnWave(WaveConfig config, int populationScaledCount)
@@ -130,14 +130,14 @@ namespace DOOM.Game
             foreach (var e in FindObjectsByType<EnemyController>(FindObjectsSortMode.None))
                 ObjectPoolManager.Instance?.Despawn(e.name, e.gameObject);
 
-            GameStateManager.Instance.SetState(GameState.WaveRestart);
+            GameStateManager.Instance?.SetState(GameState.WaveRestart);
             StartCoroutine(DelayedRestartWave());
         }
 
         private IEnumerator DelayedRestartWave()
         {
             yield return new WaitForSeconds(1.5f);
-            GameStateManager.Instance.SetState(GameState.Playing);
+            GameStateManager.Instance?.SetState(GameState.Playing);
             _currentWaveIndex = Mathf.Max(0, _currentWaveIndex - 1);
             StartCoroutine(RunWaves());
         }

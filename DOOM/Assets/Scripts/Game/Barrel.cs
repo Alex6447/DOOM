@@ -35,7 +35,7 @@ namespace DOOM.Game
 
         private void Update()
         {
-            if (!_active || !GameStateManager.Instance.IsPlaying) return;
+            if (!_active || GameStateManager.Instance == null || !GameStateManager.Instance.IsPlaying) return;
             transform.Translate(0, -moveSpeed * Time.deltaTime, 0);
 
             // Бочка вышла за нижний край — засчитать как пропущенное улучшение

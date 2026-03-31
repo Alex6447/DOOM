@@ -66,7 +66,7 @@ namespace DOOM.Game
 
         private void Update()
         {
-            if (!_active || _target == null || !GameStateManager.Instance.IsPlaying) return;
+            if (!_active || _target == null || GameStateManager.Instance == null || !GameStateManager.Instance.IsPlaying) return;
 
             // Движение к отряду
             transform.position = Vector2.MoveTowards(transform.position,
@@ -175,7 +175,7 @@ namespace DOOM.Game
             Core.GameManager.Instance?.AddScore(1000 * _config.bossLevel);
 
             if (_config.bossLevel == 6)
-                GameStateManager.Instance.SetState(GameState.Victory);
+                GameStateManager.Instance?.SetState(GameState.Victory);
 
             ObjectPoolManager.Instance?.Despawn($"boss_{_config.bossLevel}", gameObject);
         }

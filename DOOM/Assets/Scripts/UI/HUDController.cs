@@ -72,14 +72,14 @@ namespace DOOM.UI
 
         private void OnRestart()
         {
-            GameStateManager.Instance.SetState(GameState.Playing);
+            GameStateManager.Instance?.SetState(GameState.Playing);
             UnityEngine.SceneManagement.SceneManager.LoadScene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         }
 
         private void OnMainMenu()
         {
-            GameStateManager.Instance.SetState(GameState.Playing);
+            GameStateManager.Instance?.SetState(GameState.Playing);
             UnityEngine.SceneManagement.SceneManager.LoadScene("CountrySelectScene");
         }
     }

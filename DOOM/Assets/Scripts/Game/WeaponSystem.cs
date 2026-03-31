@@ -25,7 +25,7 @@ namespace DOOM.Game
 
         private void Update()
         {
-            if (!GameStateManager.Instance.IsPlaying) return;
+            if (GameStateManager.Instance == null || !GameStateManager.Instance.IsPlaying) return;
 
             _fireTimer += Time.deltaTime;
             if (_fireTimer >= 1f / fireRate)

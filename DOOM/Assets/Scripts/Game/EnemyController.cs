@@ -33,7 +33,7 @@ namespace DOOM.Game
 
         private void Update()
         {
-            if (!_active || _target == null || !GameStateManager.Instance.IsPlaying) return;
+            if (!_active || _target == null || GameStateManager.Instance == null || !GameStateManager.Instance.IsPlaying) return;
 
             // Движение к отряду
             transform.position = Vector2.MoveTowards(transform.position,

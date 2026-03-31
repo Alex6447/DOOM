@@ -53,7 +53,7 @@ namespace DOOM.Game
 
         private void Update()
         {
-            if (!GameStateManager.Instance.IsPlaying) return;
+            if (GameStateManager.Instance == null || !GameStateManager.Instance.IsPlaying) return;
 
             HandleTouch();
             // Автоматическое движение вперёд (вверх экрана)
@@ -91,7 +91,7 @@ namespace DOOM.Game
             RearrangeFormation();
 
             if (_units.Count == 0)
-                GameStateManager.Instance.SetState(Game.GameState.GameOver);
+                GameStateManager.Instance?.SetState(Game.GameState.GameOver);
         }
 
         private void RearrangeFormation()

@@ -17,7 +17,7 @@ namespace DOOM.Game
 
         private void Update()
         {
-            if (!GameStateManager.Instance.IsPlaying) return;
+            if (GameStateManager.Instance == null || !GameStateManager.Instance.IsPlaying) return;
 
             transform.Translate(0, -scrollSpeed * Time.deltaTime, 0);
 
