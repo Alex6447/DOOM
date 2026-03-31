@@ -21,15 +21,27 @@ namespace DOOM.Game
         [Header("Touch")]
         [SerializeField] private float swipeSensitivity = 0.01f;
 
+        [Header("Default")]
+        [SerializeField] private int defaultSquadSize = 5;
+
         private List<PlayerUnit> _units = new();
         private int _squadSize;
         private Vector2 _touchStartPos;
         private bool _isDragging;
+        private bool _initialized;
 
         public int SquadSize => _units.Count;
 
+        private void Start()
+        {
+            // Авто-инициализация если никто не вызвал Init() (прямой запуск GameScene)
+            if (!_initialized)
+                Init(defaultSquadSize);
+        }
+
         public void Init(int size)
         {
+            _initialized = true;
             _squadSize = size;
             SpawnUnits(size);
         }
