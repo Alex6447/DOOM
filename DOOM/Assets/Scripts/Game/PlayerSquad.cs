@@ -69,8 +69,7 @@ namespace DOOM.Game
             if (GameStateManager.Instance == null || !GameStateManager.Instance.IsPlaying) return;
 
             HandleTouch();
-            // Автоматическое движение вперёд (вверх экрана)
-            transform.Translate(0, advanceSpeed * Time.deltaTime, 0);
+            // Отряд стоит внизу, фон скроллится — иллюзия движения
         }
 
         private void HandleTouch()
