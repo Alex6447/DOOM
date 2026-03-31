@@ -99,19 +99,10 @@ namespace DOOM.Game
         private void HandleTouch()
         {
 #if UNITY_EDITOR
-            // Клавиатура — A/D или стрелки (всегда работает)
-            float h = Input.GetAxis("Horizontal");
-            if (Mathf.Abs(h) > 0.01f)
-            {
-                float newX = Mathf.Clamp(transform.position.x + h * 5f * Time.deltaTime, leftBound, rightBound);
-                transform.position = new Vector3(newX, transform.position.y, transform.position.z);
-            }
-
-            // Мышь — маппим нормализованную X позицию экрана на bounds
-            float t = Input.mousePosition.x / Screen.width; // 0..1
-            float targetX = Mathf.Lerp(leftBound, rightBound, t);
-            float newX2 = Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * 10f);
-            transform.position = new Vector3(newX2, transform.position.y, transform.position.z);
+            // Прямое следование за мышью без lerp
+            float t = Mathf.Clamp01(Input.mousePosition.x / Screen.width);
+            float x = Mathf.Lerp(leftBound, rightBound, t);
+            transform.position = new Vector3(x, transform.position.y, transform.position.z);
 #else
             if (Input.touchCount > 0)
             {
