@@ -35,6 +35,11 @@ namespace DOOM.Core
 
         private void PreWarm()
         {
+            if (poolConfigs == null || poolConfigs.Count == 0)
+            {
+                Debug.LogWarning("[ObjectPoolManager] PoolConfigs не заданы — пул пустой. Добавь префабы через Inspector.");
+                return;
+            }
             foreach (var cfg in poolConfigs)
             {
                 prefabMap[cfg.key] = cfg.prefab;
@@ -75,10 +80,12 @@ namespace DOOM.Core
 
         public void Despawn(string key, GameObject obj)
         {
+            if (obj == null) return;
             obj.GetComponent<IPoolable>()?.OnDespawn();
             obj.SetActive(false);
             obj.transform.SetParent(transform);
-            pools[key].Enqueue(obj);
+            if (pools.ContainsKey(key))
+                pools[key].Enqueue(obj);
         }
     }
 }

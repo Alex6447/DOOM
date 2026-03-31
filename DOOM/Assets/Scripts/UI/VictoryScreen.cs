@@ -19,24 +19,29 @@ namespace DOOM.UI
 
         private void Start()
         {
-            panel.SetActive(false);
-            GameStateManager.Instance.OnStateChanged += OnStateChanged;
-            playAgainButton.onClick.AddListener(OnPlayAgain);
-            mainMenuButton.onClick.AddListener(OnMainMenu);
+            panel?.SetActive(false);
+            if (GameStateManager.Instance != null)
+                GameStateManager.Instance.OnStateChanged += OnStateChanged;
+            playAgainButton?.onClick.AddListener(OnPlayAgain);
+            mainMenuButton?.onClick.AddListener(OnMainMenu);
         }
 
-        private void OnDestroy() =>
-            GameStateManager.Instance.OnStateChanged -= OnStateChanged;
+        private void OnDestroy()
+        {
+            if (GameStateManager.Instance != null)
+                GameStateManager.Instance.OnStateChanged -= OnStateChanged;
+        }
 
         private void OnStateChanged(GameState state)
         {
             if (state != GameState.Victory) return;
 
-            panel.SetActive(true);
+            panel?.SetActive(true);
             var session = GameManager.Instance?.CurrentSession;
-            if (session != null)
+            if (session == null) return;
+            if (scoreText != null) scoreText.text = $"Счёт: {session.score}";
+            if (countryText != null)
             {
-                scoreText.text = $"Счёт: {session.score}";
                 var country = CountryDatabase.Instance?.GetById(session.selectedCountryId);
                 countryText.text = country != null
                     ? $"{country.flag} {country.name} — {country.targetName} уничтожен!"

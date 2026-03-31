@@ -32,12 +32,26 @@ namespace DOOM.Game
             Instance = this;
         }
 
-        private void Start() => StartCoroutine(RunWaves());
+        private void Start()
+        {
+            // Авто-поиск EnemySpawner если не привязан в Inspector
+            if (enemySpawner == null)
+                enemySpawner = FindFirstObjectByType<EnemySpawner>();
+
+            // Не запускаем волны если нет конфигов (настроить в Inspector)
+            if (waveConfigs == null || waveConfigs.Count == 0)
+            {
+                Debug.LogWarning("[WaveController] WaveConfigs не заданы — волны не запущены. Добавь WaveConfig через Inspector.");
+                return;
+            }
+
+            StartCoroutine(RunWaves());
+        }
 
         private IEnumerator RunWaves()
         {
             var country = Core.CountryDatabase.Instance?.GetById(
-                Core.GameManager.Instance?.CurrentSession.selectedCountryId);
+                Core.GameManager.Instance?.CurrentSession?.selectedCountryId);
 
             int totalEnemies = baseEnemyCount;
             if (country != null)

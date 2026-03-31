@@ -29,33 +29,40 @@ namespace DOOM.UI
         private void Start()
         {
             _squad = FindFirstObjectByType<PlayerSquad>();
-            pauseButton.onClick.AddListener(() => GameStateManager.Instance.TogglePause());
-            resumeButton.onClick.AddListener(() => GameStateManager.Instance.SetState(GameState.Playing));
-            restartButton.onClick.AddListener(OnRestart);
-            mainMenuButton.onClick.AddListener(OnMainMenu);
 
-            GameStateManager.Instance.OnStateChanged += OnStateChanged;
-            pauseMenu.SetActive(false);
+            pauseButton?.onClick.AddListener(() => GameStateManager.Instance?.TogglePause());
+            resumeButton?.onClick.AddListener(() => GameStateManager.Instance?.SetState(GameState.Playing));
+            restartButton?.onClick.AddListener(OnRestart);
+            mainMenuButton?.onClick.AddListener(OnMainMenu);
+
+            if (GameStateManager.Instance != null)
+                GameStateManager.Instance.OnStateChanged += OnStateChanged;
+
+            pauseMenu?.SetActive(false);
         }
 
-        private void OnDestroy() =>
-            GameStateManager.Instance.OnStateChanged -= OnStateChanged;
+        private void OnDestroy()
+        {
+            if (GameStateManager.Instance != null)
+                GameStateManager.Instance.OnStateChanged -= OnStateChanged;
+        }
 
         private void Update()
         {
-            if (_squad != null)
+            if (_squad == null) _squad = FindFirstObjectByType<PlayerSquad>();
+
+            if (_squad != null && squadSizeText != null)
                 squadSizeText.text = $"Отряд: {_squad.SquadSize}";
 
-            if (GameManager.Instance != null)
-            {
-                scoreText.text = $"Счёт: {GameManager.Instance.CurrentSession.score}";
-                waveText.text  = $"Волна: {GameManager.Instance.CurrentSession.currentWave}";
-            }
+            var session = GameManager.Instance?.CurrentSession;
+            if (session == null) return;
+            if (scoreText != null) scoreText.text = $"Счёт: {session.score}";
+            if (waveText  != null) waveText.text  = $"Волна: {session.currentWave}";
         }
 
         private void OnStateChanged(GameState state)
         {
-            pauseMenu.SetActive(state == GameState.Paused);
+            pauseMenu?.SetActive(state == GameState.Paused);
         }
 
         public void RefreshAfterUpgrade()
