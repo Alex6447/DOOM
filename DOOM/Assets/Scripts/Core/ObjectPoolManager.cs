@@ -29,9 +29,8 @@ namespace DOOM.Core
             if (Instance != null && Instance != this) { Destroy(gameObject); return; }
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            PreWarm();
         }
-
-        private void Start() => PreWarm();
 
         private void PreWarm()
         {

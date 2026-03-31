@@ -32,9 +32,10 @@ namespace DOOM.Game
 
         public int SquadSize => _units.Count;
 
-        private void Start()
+        private System.Collections.IEnumerator Start()
         {
-            // Авто-инициализация если никто не вызвал Init() (прямой запуск GameScene)
+            // Ждём один кадр чтобы ObjectPoolManager.Awake() успел прогреть пулы
+            yield return null;
             if (!_initialized)
                 Init(defaultSquadSize);
         }

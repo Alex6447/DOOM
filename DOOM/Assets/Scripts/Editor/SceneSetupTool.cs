@@ -133,6 +133,9 @@ namespace DOOM.Editor
 
             EditorSceneManager.SaveScene(scene);
             Debug.Log("<color=green>[DOOM] ✅ GameScene собрана!</color>");
+
+            // Автоматически прописываем конфиги и префабы
+            DefaultConfigsCreator.CreateAll();
         }
 
         // ══════════════════════════════════════════════════════════════
