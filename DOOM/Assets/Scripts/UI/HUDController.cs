@@ -38,7 +38,7 @@ namespace DOOM.UI
             if (GameStateManager.Instance != null)
                 GameStateManager.Instance.OnStateChanged += OnStateChanged;
 
-            pauseMenu?.SetActive(false);
+            if (pauseMenu != null) pauseMenu.SetActive(false);
         }
 
         private void OnDestroy()
@@ -62,7 +62,7 @@ namespace DOOM.UI
 
         private void OnStateChanged(GameState state)
         {
-            pauseMenu?.SetActive(state == GameState.Paused);
+            if (pauseMenu != null) pauseMenu.SetActive(state == GameState.Paused);
         }
 
         public void RefreshAfterUpgrade()

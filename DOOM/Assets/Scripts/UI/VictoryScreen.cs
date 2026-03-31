@@ -19,7 +19,7 @@ namespace DOOM.UI
 
         private void Start()
         {
-            panel?.SetActive(false);
+            if (panel != null) panel.SetActive(false);
             if (GameStateManager.Instance != null)
                 GameStateManager.Instance.OnStateChanged += OnStateChanged;
             playAgainButton?.onClick.AddListener(OnPlayAgain);
@@ -36,7 +36,7 @@ namespace DOOM.UI
         {
             if (state != GameState.Victory) return;
 
-            panel?.SetActive(true);
+            if (panel != null) panel.SetActive(true);
             var session = GameManager.Instance?.CurrentSession;
             if (session == null) return;
             if (scoreText != null) scoreText.text = $"Счёт: {session.score}";

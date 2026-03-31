@@ -97,17 +97,39 @@ namespace DOOM.Editor
             // Панель паузы
             var pausePanel = MakePanel(canvasGO.transform, "PauseMenu", new Color(0, 0, 0, 0.75f));
             pausePanel.SetActive(false);
-            MakeButton(pausePanel.transform, "ResumeBtn",   "▶ Продолжить",  new Vector2(0,  120), new Vector2(380, 80));
-            MakeButton(pausePanel.transform, "RestartBtn",  "↺ Рестарт",     new Vector2(0,    0), new Vector2(380, 80));
-            MakeButton(pausePanel.transform, "MainMenuBtn", "⬅ Главное меню",new Vector2(0, -120), new Vector2(380, 80));
+            var resumeBtn  = MakeButton(pausePanel.transform, "ResumeBtn",   "Продолжить",  new Vector2(0,  120), new Vector2(380, 80));
+            var restartBtn = MakeButton(pausePanel.transform, "RestartBtn",  "Рестарт",     new Vector2(0,    0), new Vector2(380, 80));
+            var menuBtn    = MakeButton(pausePanel.transform, "MainMenuBtn", "Главное меню",new Vector2(0, -120), new Vector2(380, 80));
 
             // Экран победы
             var victoryPanel = MakePanel(canvasGO.transform, "VictoryPanel", new Color(0, 0, 0, 0.85f));
             victoryPanel.SetActive(false);
-            MakeLabel(victoryPanel.transform, "VictoryTitle",   "🏆 ПОБЕДА!",     42, new Vector2(0, 200), new Vector2(700, 80), TextAlignmentOptions.Midline);
-            MakeLabel(victoryPanel.transform, "VictoryCountry", "Цель уничтожена!", 24, new Vector2(0,  80), new Vector2(700, 60), TextAlignmentOptions.Midline);
-            MakeLabel(victoryPanel.transform, "VictoryScore",   "Счёт: 0",         22, new Vector2(0, -20), new Vector2(700, 60), TextAlignmentOptions.Midline);
-            MakeButton(victoryPanel.transform, "PlayAgainBtn",  "▶ Играть снова", new Vector2(0,-140), new Vector2(400, 80));
+            MakeLabel(victoryPanel.transform, "VictoryTitle",   "ПОБЕДА!",          42, new Vector2(0, 200), new Vector2(700, 80), TextAlignmentOptions.Midline);
+            var countryLbl  = MakeLabel(victoryPanel.transform, "VictoryCountry", "Цель уничтожена!", 24, new Vector2(0,  80), new Vector2(700, 60), TextAlignmentOptions.Midline);
+            var scoreLbl    = MakeLabel(victoryPanel.transform, "VictoryScore",   "Счёт: 0",          22, new Vector2(0, -20), new Vector2(700, 60), TextAlignmentOptions.Midline);
+            var playAgainBtn = MakeButton(victoryPanel.transform, "PlayAgainBtn", "Играть снова", new Vector2(0,-140), new Vector2(400, 80));
+
+            // ── Привязка SerializeField: HUDController ───────────────
+            var hud   = canvasGO.GetComponent<UI.HUDController>();
+            var hudSO = new UnityEditor.SerializedObject(hud);
+            hudSO.FindProperty("squadSizeText").objectReferenceValue  = canvasGO.transform.Find("SquadLabel") .GetComponent<TMPro.TextMeshProUGUI>();
+            hudSO.FindProperty("waveText")     .objectReferenceValue  = canvasGO.transform.Find("WaveLabel")  .GetComponent<TMPro.TextMeshProUGUI>();
+            hudSO.FindProperty("scoreText")    .objectReferenceValue  = canvasGO.transform.Find("ScoreLabel") .GetComponent<TMPro.TextMeshProUGUI>();
+            hudSO.FindProperty("pauseButton")  .objectReferenceValue  = pauseBtn  .GetComponent<Button>();
+            hudSO.FindProperty("pauseMenu")    .objectReferenceValue  = pausePanel;
+            hudSO.FindProperty("resumeButton") .objectReferenceValue  = resumeBtn .GetComponent<Button>();
+            hudSO.FindProperty("restartButton").objectReferenceValue  = restartBtn.GetComponent<Button>();
+            hudSO.FindProperty("mainMenuButton").objectReferenceValue = menuBtn   .GetComponent<Button>();
+            hudSO.ApplyModifiedProperties();
+
+            // ── Привязка SerializeField: VictoryScreen ───────────────
+            var vs   = canvasGO.GetComponent<UI.VictoryScreen>();
+            var vsSO = new UnityEditor.SerializedObject(vs);
+            vsSO.FindProperty("panel")          .objectReferenceValue = victoryPanel;
+            vsSO.FindProperty("scoreText")      .objectReferenceValue = scoreLbl    .GetComponent<TMPro.TextMeshProUGUI>();
+            vsSO.FindProperty("countryText")    .objectReferenceValue = countryLbl  .GetComponent<TMPro.TextMeshProUGUI>();
+            vsSO.FindProperty("playAgainButton").objectReferenceValue = playAgainBtn.GetComponent<Button>();
+            vsSO.ApplyModifiedProperties();
 
             EditorSceneManager.SaveScene(scene);
             Debug.Log("<color=green>[DOOM] ✅ GameScene собрана!</color>");
