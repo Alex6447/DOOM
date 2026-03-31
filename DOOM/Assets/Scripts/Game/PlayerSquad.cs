@@ -75,10 +75,16 @@ namespace DOOM.Game
         private void HandleTouch()
         {
 #if UNITY_EDITOR
-            // Мышь в редакторе
+            // Мышь в редакторе — считаем дельту за кадр
             if (Input.GetMouseButtonDown(0)) { _touchStartPos = Input.mousePosition; _isDragging = true; }
-            if (Input.GetMouseButton(0) && _isDragging) MoveSquad(((Vector2)Input.mousePosition - _touchStartPos).x);
-            if (Input.GetMouseButtonUp(0)) { _isDragging = false; _touchStartPos = Vector2.zero; }
+            if (Input.GetMouseButton(0) && _isDragging)
+            {
+                Vector2 current = Input.mousePosition;
+                float delta = current.x - _touchStartPos.x;
+                MoveSquad(delta);
+                _touchStartPos = current;
+            }
+            if (Input.GetMouseButtonUp(0)) { _isDragging = false; }
 #else
             if (Input.touchCount > 0)
             {
