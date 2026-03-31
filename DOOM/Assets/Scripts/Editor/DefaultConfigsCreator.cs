@@ -27,11 +27,11 @@ namespace DOOM.Editor
             // ── 1. EnemyConfigs ──────────────────────────────────────
             var enemyTypes = new[]
             {
-                (EnemyType.Zombie,   "Zombie",   50f,  5f, 1.5f, 10,  new Color(0.4f,0.7f,0.3f)),
-                (EnemyType.Dog,      "Dog",      30f,  8f, 3.0f, 15,  new Color(0.7f,0.5f,0.2f)),
-                (EnemyType.Lizard,   "Lizard",   60f,  6f, 2.0f, 20,  new Color(0.2f,0.6f,0.4f)),
-                (EnemyType.Monster,  "Monster", 120f, 12f, 1.2f, 40,  new Color(0.6f,0.1f,0.1f)),
-                (EnemyType.Guard,    "Guard",    80f, 10f, 2.5f, 30,  new Color(0.3f,0.3f,0.7f)),
+                (EnemyType.Zombie,   "Zombie",   50f,  5f, 1.5f, 10,  new Color(0.3f,0.8f,0.2f)),
+                (EnemyType.Dog,      "Dog",      30f,  8f, 3.0f, 15,  new Color(0.9f,0.6f,0.1f)),
+                (EnemyType.Lizard,   "Lizard",   60f,  6f, 2.0f, 20,  new Color(0.1f,0.8f,0.5f)),
+                (EnemyType.Monster,  "Monster", 120f, 12f, 1.2f, 40,  new Color(0.9f,0.1f,0.1f)),
+                (EnemyType.Guard,    "Guard",    80f, 10f, 2.5f, 30,  new Color(0.2f,0.2f,0.9f)),
             };
 
             var enemyConfigs = new Dictionary<EnemyType, EnemyConfig>();
@@ -85,15 +85,15 @@ namespace DOOM.Editor
             }
 
             // ── 3. Player unit prefab ────────────────────────────────
-            GetOrCreatePrefab("player_unit", new Color(0.8f, 0.7f, 0.5f), new Vector2(0.4f, 0.7f),
+            GetOrCreatePrefab("player_unit", new Color(0.3f, 0.6f, 1.0f), new Vector2(0.6f, 0.9f),
                 typeof(PlayerUnit));
 
             // ── 4. Bullet prefab ─────────────────────────────────────
-            GetOrCreatePrefab("bullet", new Color(1f, 0.9f, 0.2f), new Vector2(0.15f, 0.15f),
+            GetOrCreatePrefab("bullet", new Color(1f, 0.9f, 0.2f), new Vector2(0.2f, 0.2f),
                 typeof(Bullet));
 
             // ── 5. Barrel prefab ─────────────────────────────────────
-            GetOrCreatePrefab("barrel", new Color(0.6f, 0.3f, 0.1f), new Vector2(0.5f, 0.6f),
+            GetOrCreatePrefab("barrel", new Color(0.6f, 0.3f, 0.1f), new Vector2(0.6f, 0.8f),
                 typeof(Barrel));
 
             // ── 6. WaveConfigs ───────────────────────────────────────
@@ -216,8 +216,9 @@ namespace DOOM.Editor
             params System.Type[] components)
         {
             string path = $"{PREFAB_PATH}/{key}.prefab";
+            // Всегда пересоздаём чтобы применить новые размеры/цвета
             var existing = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            if (existing != null) return existing;
+            if (existing != null) AssetDatabase.DeleteAsset(path);
 
             var go = new GameObject(key);
 

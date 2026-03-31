@@ -68,9 +68,7 @@ namespace DOOM.Editor
             squad.AddComponent<Game.PlayerSquad>();
             squad.AddComponent<Game.WeaponSystem>();
 
-            // Визуальный placeholder бойца
-            MakeSprite("Unit_Visual", squad, new Color(0.8f, 0.7f, 0.5f),
-                Vector3.zero, new Vector3(0.4f, 0.7f, 1), 2);
+            // Визуальный placeholder убран — бойцы спавнятся из пула
 
             // ── HUD Canvas ──────────────────────────────────────────
             var canvasGO = new GameObject("HUD_Canvas");
