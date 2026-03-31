@@ -15,8 +15,8 @@ namespace DOOM.Game
         [SerializeField] private float advanceSpeed = 2f;
 
         [Header("Boundaries")]
-        [SerializeField] private float leftBound = -1.5f;
-        [SerializeField] private float rightBound = 1.5f;
+        [SerializeField] private float leftBound = -2.5f;
+        [SerializeField] private float rightBound = 2.5f;
 
         [Header("Touch")]
         [SerializeField] private float swipeSensitivity = 0.015f;
@@ -99,13 +99,9 @@ namespace DOOM.Game
         private void HandleTouch()
         {
 #if UNITY_EDITOR
-            // Зажми левую кнопку мыши и тяни влево/вправо
-            if (Input.GetMouseButton(0))
-            {
-                float t = Mathf.Clamp01(Input.mousePosition.x / Screen.width);
-                float x = Mathf.Lerp(leftBound, rightBound, t);
-                transform.position = new Vector3(x, transform.position.y, transform.position.z);
-            }
+            float t = Mathf.Clamp01(Input.mousePosition.x / Screen.width);
+            float x = Mathf.Lerp(leftBound, rightBound, t);
+            transform.position = new Vector3(x, transform.position.y, transform.position.z);
 #else
             if (Input.touchCount > 0)
             {
