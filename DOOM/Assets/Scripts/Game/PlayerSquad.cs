@@ -92,14 +92,11 @@ namespace DOOM.Game
                 transform.position = new Vector3(newX, transform.position.y, transform.position.z);
             }
 
-            // Мышь — только если камера есть
-            if (Camera.main != null)
-            {
-                var mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                float targetX = Mathf.Clamp(mouseWorld.x, leftBound, rightBound);
-                float newX2 = Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * 10f);
-                transform.position = new Vector3(newX2, transform.position.y, transform.position.z);
-            }
+            // Мышь — маппим нормализованную X позицию экрана на bounds
+            float t = Input.mousePosition.x / Screen.width; // 0..1
+            float targetX = Mathf.Lerp(leftBound, rightBound, t);
+            float newX2 = Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * 10f);
+            transform.position = new Vector3(newX2, transform.position.y, transform.position.z);
 #else
             if (Input.touchCount > 0)
             {
