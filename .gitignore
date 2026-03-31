@@ -56,3 +56,12 @@ Thumbs.db
 
 # Packages (restore via Package Manager)
 /[Pp]ackages/
+
+# Unity project in DOOM/ subfolder
+DOOM/[Ll]ibrary/
+DOOM/[Tt]emp/
+DOOM/[Oo]bj/
+DOOM/[Bb]uild/
+DOOM/[Bb]uilds/
+DOOM/[Ll]ogs/
+DOOM/[Uu]ser[Ss]ettings/
