@@ -19,7 +19,7 @@ namespace DOOM.Game
         [SerializeField] private float rightBound = 1.5f;
 
         [Header("Touch")]
-        [SerializeField] private float swipeSensitivity = 0.01f;
+        [SerializeField] private float swipeSensitivity = 0.015f;
 
         [Header("Default")]
         [SerializeField] private int defaultSquadSize = 5;

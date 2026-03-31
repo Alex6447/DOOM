@@ -215,43 +215,18 @@ namespace DOOM.Editor
         static GameObject GetOrCreatePrefab(string key, Color color, Vector2 size,
             params System.Type[] components)
         {
-            string path     = $"{PREFAB_PATH}/{key}.prefab";
-            string texPath  = $"{PREFAB_PATH}/{key}_tex.png";
-
-            // Удаляем старый prefab чтобы пересоздать с новыми параметрами
+            string path = $"{PREFAB_PATH}/{key}.prefab";
             if (AssetDatabase.LoadAssetAtPath<GameObject>(path) != null)
                 AssetDatabase.DeleteAsset(path);
 
-            // Сохраняем текстуру как PNG-asset чтобы спрайт выжил после перезагрузки
-            if (AssetDatabase.LoadAssetAtPath<Texture2D>(texPath) == null)
-            {
-                var tex = new Texture2D(16, 16);
-                var pixels = new Color[256];
-                for (int i = 0; i < 256; i++) pixels[i] = Color.white;
-                tex.SetPixels(pixels); tex.Apply();
-                System.IO.File.WriteAllBytes(
-                    System.IO.Path.Combine(Application.dataPath, "../", texPath), tex.EncodeToPNG());
-                AssetDatabase.ImportAsset(texPath);
-            }
-
-            var savedTex = AssetDatabase.LoadAssetAtPath<Texture2D>(texPath);
-            var sprite   = Sprite.Create(savedTex,
-                new Rect(0, 0, savedTex.width, savedTex.height),
-                Vector2.one * 0.5f, savedTex.width);
-            // Сохраняем спрайт как sub-asset текстуры
-            var spritePath = $"{PREFAB_PATH}/{key}_spr.asset";
-            if (AssetDatabase.LoadAssetAtPath<Sprite>(spritePath) == null)
-            {
-                AssetDatabase.CreateAsset(sprite, spritePath);
-                AssetDatabase.SaveAssets();
-            }
-            var savedSprite = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
-
             var go = new GameObject(key);
             var sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = savedSprite != null ? savedSprite : sprite;
+
+            // Используем встроенный спрайт Unity — он всегда доступен
+            sr.sprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
             sr.color  = color;
-            go.transform.localScale = new Vector3(size.x, size.y, 1f);
+            sr.drawMode = SpriteDrawMode.Sliced;
+            sr.size = size;
 
             foreach (var t in components)
                 if (go.GetComponent(t) == null) go.AddComponent(t);
