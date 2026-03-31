@@ -8,7 +8,7 @@ namespace DOOM.Game
     /// </summary>
     public class EnemySpawner : MonoBehaviour
     {
-        [SerializeField] private float spawnY = 6f;
+        [SerializeField] private float spawnY = 4.5f;
         [SerializeField] private float corridorHalfWidth = 1.5f;
         [SerializeField] private int enemiesPerRow = 5;
 
