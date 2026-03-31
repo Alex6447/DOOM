@@ -8,7 +8,7 @@ namespace DOOM.Game
     /// </summary>
     public class PlayerUnit : MonoBehaviour, IPoolable
     {
-        [SerializeField] private float maxHp = 100f;
+        [SerializeField] private float maxHp = 500f;
         private float _hp;
 
         public bool IsAlive => _hp > 0;

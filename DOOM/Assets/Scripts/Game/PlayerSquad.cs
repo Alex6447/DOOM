@@ -75,13 +75,19 @@ namespace DOOM.Game
         private void HandleTouch()
         {
 #if UNITY_EDITOR
-            // Мышь в редакторе — считаем дельту за кадр
+            // Клавиатура — стрелки и A/D
+            float keyDelta = 0f;
+            if (Input.GetKey(KeyCode.LeftArrow)  || Input.GetKey(KeyCode.A)) keyDelta = -80f;
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) keyDelta =  80f;
+            if (keyDelta != 0f) MoveSquad(keyDelta * Time.deltaTime);
+
+            // Мышь — дельта за кадр
             if (Input.GetMouseButtonDown(0)) { _touchStartPos = Input.mousePosition; _isDragging = true; }
             if (Input.GetMouseButton(0) && _isDragging)
             {
                 Vector2 current = Input.mousePosition;
                 float delta = current.x - _touchStartPos.x;
-                MoveSquad(delta);
+                if (Mathf.Abs(delta) > 0.5f) MoveSquad(delta);
                 _touchStartPos = current;
             }
             if (Input.GetMouseButtonUp(0)) { _isDragging = false; }
