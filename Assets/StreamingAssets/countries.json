@@ -1,0 +1,26 @@
+{
+  "countries": [
+    { "id": "BR", "name": "Бразилия",      "capital": "Бразилиа",        "population": 214000000, "flag": "🇧🇷", "targetName": "Президентский дворец" },
+    { "id": "GB", "name": "Великобритания","capital": "Лондон",           "population": 67000000,  "flag": "🇬🇧", "targetName": "Букингемский дворец" },
+    { "id": "DE", "name": "Германия",      "capital": "Берлин",           "population": 84000000,  "flag": "🇩🇪", "targetName": "Рейхстаг" },
+    { "id": "IN", "name": "Индия",         "capital": "Нью-Дели",         "population": 1400000000,"flag": "🇮🇳", "targetName": "Президентский дворец" },
+    { "id": "ES", "name": "Испания",       "capital": "Мадрид",           "population": 47000000,  "flag": "🇪🇸", "targetName": "Королевский дворец" },
+    { "id": "IT", "name": "Италия",        "capital": "Рим",              "population": 60000000,  "flag": "🇮🇹", "targetName": "Квиринальский дворец" },
+    { "id": "CA", "name": "Канада",        "capital": "Оттава",           "population": 38000000,  "flag": "🇨🇦", "targetName": "Парламентский холм" },
+    { "id": "CN", "name": "Китай",         "capital": "Пекин",            "population": 1400000000,"flag": "🇨🇳", "targetName": "Запретный город" },
+    { "id": "MX", "name": "Мексика",       "capital": "Мехико",           "population": 130000000, "flag": "🇲🇽", "targetName": "Национальный дворец" },
+    { "id": "NG", "name": "Нигерия",       "capital": "Абуджа",           "population": 220000000, "flag": "🇳🇬", "targetName": "Вилла Асо" },
+    { "id": "NO", "name": "Норвегия",      "capital": "Осло",             "population": 5400000,   "flag": "🇳🇴", "targetName": "Королевский замок" },
+    { "id": "PK", "name": "Пакистан",      "capital": "Исламабад",        "population": 230000000, "flag": "🇵🇰", "targetName": "Президентский дворец" },
+    { "id": "RU", "name": "Россия",        "capital": "Москва",           "population": 145000000, "flag": "🇷🇺", "targetName": "Кремль" },
+    { "id": "SA", "name": "Саудовская Аравия","capital":"Эр-Рияд",        "population": 35000000,  "flag": "🇸🇦", "targetName": "Королевский дворец" },
+    { "id": "US", "name": "США",           "capital": "Вашингтон",        "population": 335000000, "flag": "🇺🇸", "targetName": "Белый дом" },
+    { "id": "TR", "name": "Турция",        "capital": "Анкара",           "population": 85000000,  "flag": "🇹🇷", "targetName": "Президентский комплекс" },
+    { "id": "UA", "name": "Украина",       "capital": "Киев",             "population": 44000000,  "flag": "🇺🇦", "targetName": "Мариинский дворец" },
+    { "id": "FR", "name": "Франция",       "capital": "Париж",            "population": 68000000,  "flag": "🇫🇷", "targetName": "Елисейский дворец" },
+    { "id": "JP", "name": "Япония",        "capital": "Токио",            "population": 125000000, "flag": "🇯🇵", "targetName": "Императорский дворец" },
+    { "id": "KR", "name": "Южная Корея",   "capital": "Сеул",             "population": 52000000,  "flag": "🇰🇷", "targetName": "Голубой дом" },
+    { "id": "AU", "name": "Австралия",     "capital": "Канберра",         "population": 26000000,  "flag": "🇦🇺", "targetName": "Парламент Австралии" },
+    { "id": "AR", "name": "Аргентина",     "capital": "Буэнос-Айрес",     "population": 46000000,  "flag": "🇦🇷", "targetName": "Каса Росада" }
+  ]
+}
