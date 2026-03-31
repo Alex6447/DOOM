@@ -17,11 +17,14 @@ namespace DOOM.Core
             if (Instance != null && Instance != this) { Destroy(gameObject); return; }
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            // Инициализируем сессию сразу в Awake чтобы другие Start() не получили null
+            CurrentSession = new GameSession();
         }
 
         private void Start()
         {
-            CurrentSession = SaveSystem.Instance?.Load() ?? new GameSession();
+            // Перезаписываем сохранённой сессией если есть
+            CurrentSession = SaveSystem.Instance?.Load() ?? CurrentSession;
         }
 
         public void StartNewGame(string countryId)

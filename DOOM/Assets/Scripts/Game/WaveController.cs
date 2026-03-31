@@ -30,6 +30,7 @@ namespace DOOM.Game
         {
             if (Instance != null && Instance != this) { Destroy(gameObject); return; }
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
         private void Start()
@@ -62,7 +63,8 @@ namespace DOOM.Game
                 if (GameStateManager.Instance != null && !GameStateManager.Instance.IsPlaying)
                     yield return new WaitUntil(() => GameStateManager.Instance == null || GameStateManager.Instance.IsPlaying);
 
-                Core.GameManager.Instance.CurrentSession.currentWave = _currentWaveIndex + 1;
+                if (Core.GameManager.Instance?.CurrentSession != null)
+                    Core.GameManager.Instance.CurrentSession.currentWave = _currentWaveIndex + 1;
                 var config = waveConfigs[_currentWaveIndex];
 
                 yield return StartCoroutine(SpawnWave(config, totalEnemies));
