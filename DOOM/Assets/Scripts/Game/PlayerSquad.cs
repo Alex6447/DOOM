@@ -75,13 +75,22 @@ namespace DOOM.Game
         private void HandleTouch()
         {
 #if UNITY_EDITOR
-            // В редакторе — отряд следует за X-позицией мыши напрямую
-            var mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            float targetX = Mathf.Clamp(mouseWorld.x, leftBound, rightBound);
-            transform.position = new Vector3(
-                Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * 12f),
-                transform.position.y,
-                transform.position.z);
+            // Клавиатура — A/D или стрелки (всегда работает)
+            float h = Input.GetAxis("Horizontal");
+            if (Mathf.Abs(h) > 0.01f)
+            {
+                float newX = Mathf.Clamp(transform.position.x + h * 5f * Time.deltaTime, leftBound, rightBound);
+                transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+            }
+
+            // Мышь — только если камера есть
+            if (Camera.main != null)
+            {
+                var mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                float targetX = Mathf.Clamp(mouseWorld.x, leftBound, rightBound);
+                float newX2 = Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * 10f);
+                transform.position = new Vector3(newX2, transform.position.y, transform.position.z);
+            }
 #else
             if (Input.touchCount > 0)
             {
