@@ -19,11 +19,39 @@ namespace DOOM.UI
 
         private void Start()
         {
+            // Авто-поиск по имени если не задано в Inspector
+            var t = transform;
+            if (panel          == null) { var go = FindInParent(t, "VictoryPanel"); panel = go; }
+            if (scoreText      == null) scoreText     = FindTMP(t, "VictoryScore");
+            if (countryText    == null) countryText   = FindTMP(t, "VictoryCountry");
+            if (playAgainButton== null) playAgainButton = FindBtn(t, "PlayAgainBtn");
+            if (mainMenuButton == null) mainMenuButton  = FindBtn(t, "PlayAgainBtn"); // fallback
+
             if (panel != null) panel.SetActive(false);
             if (GameStateManager.Instance != null)
                 GameStateManager.Instance.OnStateChanged += OnStateChanged;
             playAgainButton?.onClick.AddListener(OnPlayAgain);
             mainMenuButton?.onClick.AddListener(OnMainMenu);
+        }
+
+        private TextMeshProUGUI FindTMP(Transform root, string n)
+        {
+            var all = root.GetComponentsInChildren<TextMeshProUGUI>(true);
+            foreach (var c in all)
+                if (c.name == n) return c;
+            return null;
+        }
+        private Button FindBtn(Transform root, string n)
+        {
+            var all = root.GetComponentsInChildren<Button>(true);
+            foreach (var b in all)
+                if (b.name == n) return b;
+            return null;
+        }
+        private GameObject FindInParent(Transform root, string n)
+        {
+            var found = root.Find(n);
+            return found != null ? found.gameObject : null;
         }
 
         private void OnDestroy()

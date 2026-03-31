@@ -30,6 +30,17 @@ namespace DOOM.UI
         {
             _squad = FindFirstObjectByType<PlayerSquad>();
 
+            // Авто-поиск по имени если не задано в Inspector
+            var t = transform;
+            if (squadSizeText == null) squadSizeText = FindTMP(t, "SquadLabel");
+            if (waveText      == null) waveText      = FindTMP(t, "WaveLabel");
+            if (scoreText     == null) scoreText     = FindTMP(t, "ScoreLabel");
+            if (pauseButton   == null) pauseButton   = FindBtn(t, "PauseBtn");
+            if (pauseMenu     == null) pauseMenu     = FindGO(t,  "PauseMenu");
+            if (resumeButton  == null) resumeButton  = FindBtn(t, "ResumeBtn");
+            if (restartButton == null) restartButton = FindBtn(t, "RestartBtn");
+            if (mainMenuButton== null) mainMenuButton= FindBtn(t, "MainMenuBtn");
+
             pauseButton?.onClick.AddListener(() => GameStateManager.Instance?.TogglePause());
             resumeButton?.onClick.AddListener(() => GameStateManager.Instance?.SetState(GameState.Playing));
             restartButton?.onClick.AddListener(OnRestart);
@@ -39,6 +50,25 @@ namespace DOOM.UI
                 GameStateManager.Instance.OnStateChanged += OnStateChanged;
 
             if (pauseMenu != null) pauseMenu.SetActive(false);
+        }
+
+        private TextMeshProUGUI FindTMP(Transform root, string n)
+        {
+            var go = root.Find(n);
+            return go != null ? go.GetComponent<TextMeshProUGUI>() : null;
+        }
+        private Button FindBtn(Transform root, string n)
+        {
+            // Ищем рекурсивно (кнопки могут быть внутри PauseMenu)
+            var found = root.GetComponentsInChildren<Button>(true);
+            foreach (var b in found)
+                if (b.name == n) return b;
+            return null;
+        }
+        private GameObject FindGO(Transform root, string n)
+        {
+            var t = root.Find(n);
+            return t != null ? t.gameObject : null;
         }
 
         private void OnDestroy()
