@@ -69,6 +69,21 @@ namespace DOOM.Game
             if (GameStateManager.Instance == null || !GameStateManager.Instance.IsPlaying) return;
 
             HandleTouch();
+            UpdateUnitsPosition();
+        }
+
+        private void UpdateUnitsPosition()
+        {
+            int count = _units.Count;
+            for (int i = 0; i < count; i++)
+            {
+                if (_units[i] == null) continue;
+                float xOffset = (i - (count - 1) / 2f) * unitSpacing;
+                _units[i].transform.position = new Vector3(
+                    transform.position.x + xOffset,
+                    transform.position.y,
+                    transform.position.z);
+            }
         }
 
         private void LateUpdate()
