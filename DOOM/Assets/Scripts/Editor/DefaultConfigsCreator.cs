@@ -49,7 +49,7 @@ namespace DOOM.Editor
                 enemyConfigs[type] = cfg;
 
                 string poolKey = $"enemy_{tname.ToLower()}";
-                enemyPrefabs[type] = GetOrCreatePrefab(poolKey, color, new Vector2(0.5f, 0.8f),
+                enemyPrefabs[type] = GetOrCreatePrefab(poolKey, color, new Vector2(0.4f, 0.5f),
                     typeof(EnemyController), typeof(Rigidbody2D), typeof(CircleCollider2D));
             }
 
@@ -85,7 +85,7 @@ namespace DOOM.Editor
             }
 
             // ── 3. Player unit prefab ────────────────────────────────
-            GetOrCreatePrefab("player_unit", new Color(0.3f, 0.6f, 1.0f), new Vector2(0.6f, 0.9f),
+            GetOrCreatePrefab("player_unit", new Color(0.3f, 0.6f, 1.0f), new Vector2(0.35f, 0.5f),
                 typeof(PlayerUnit));
 
             // ── 4. Bullet prefab ─────────────────────────────────────

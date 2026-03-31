@@ -85,9 +85,9 @@ namespace DOOM.Editor
             canvasGO.AddComponent<Core.SafeAreaAdapter>();
 
             // HUD элементы
-            MakeLabel(canvasGO.transform, "SquadLabel",  "Отряд: 5",  36, new Vector2(-300,  -60), new Vector2(400, 70), TextAlignmentOptions.MidlineLeft);
-            MakeLabel(canvasGO.transform, "WaveLabel",   "Волна: 1",  36, new Vector2( 300,  -60), new Vector2(400, 70), TextAlignmentOptions.MidlineRight);
-            MakeLabel(canvasGO.transform, "ScoreLabel",  "Счёт: 0",   48, new Vector2(   0,  -60), new Vector2(400, 70), TextAlignmentOptions.Midline);
+            MakeLabel(canvasGO.transform, "SquadLabel",  "Отряд: 5",  36, new Vector2(-300, -80), new Vector2(400, 70), TextAlignmentOptions.MidlineLeft);
+            MakeLabel(canvasGO.transform, "WaveLabel",   "Волна: 1",  36, new Vector2( 300, -80), new Vector2(400, 70), TextAlignmentOptions.MidlineRight);
+            MakeLabel(canvasGO.transform, "ScoreLabel",  "Счёт: 0",   48, new Vector2(   0, -80), new Vector2(400, 70), TextAlignmentOptions.Midline);
 
             // Кнопка паузы
             var pauseBtn = MakeButton(canvasGO.transform, "PauseBtn", "||", new Vector2(460, -50), new Vector2(70, 70));
