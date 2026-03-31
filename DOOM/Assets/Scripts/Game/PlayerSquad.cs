@@ -69,7 +69,16 @@ namespace DOOM.Game
             if (GameStateManager.Instance == null || !GameStateManager.Instance.IsPlaying) return;
 
             HandleTouch();
-            // Отряд стоит внизу, фон скроллится — иллюзия движения
+        }
+
+        private void LateUpdate()
+        {
+            // Отладка — показывает позицию отряда и мыши каждые 60 кадров
+            if (Time.frameCount % 60 == 0 && Camera.main != null)
+            {
+                var mw = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Debug.Log($"[Squad] pos={transform.position.x:F2}  mouse_world={mw.x:F2}  bounds=[{leftBound},{rightBound}]");
+            }
         }
 
         private void HandleTouch()
