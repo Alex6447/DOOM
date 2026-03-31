@@ -92,7 +92,7 @@ namespace DOOM.Editor
             MakeLabel(canvasGO.transform, "ScoreLabel",  "Счёт: 0",      20, new Vector2(   0,  -50), new Vector2(300, 50), TextAlignmentOptions.Midline);
 
             // Кнопка паузы
-            var pauseBtn = MakeButton(canvasGO.transform, "PauseBtn", "⏸", new Vector2(460, -50), new Vector2(70, 70));
+            var pauseBtn = MakeButton(canvasGO.transform, "PauseBtn", "||", new Vector2(460, -50), new Vector2(70, 70));
 
             // Панель паузы
             var pausePanel = MakePanel(canvasGO.transform, "PauseMenu", new Color(0, 0, 0, 0.75f));
